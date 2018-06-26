@@ -51,6 +51,28 @@ app.get('/formulario/:id', (req, res) => {
     });
 });
 
+app.get('/formulario/nome/:nome', (req, res) => {
+    let query = {
+        nome: req.params.nome
+    };
+    
+    req.db.collection('clientes').find(query).toArray((err, data) => {
+        if(err){
+            res.status(500).send();
+            return;
+        }
+        
+        if(!data){
+            res.status(404).send();
+            return;
+        }
+        
+        res.send(data);
+    });
+});
+
+
+
 //insere um novo sabor de churro
 app.post('/cadastro', (req, res) => {
     //remove dados indesejados do body
